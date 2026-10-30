@@ -8,4 +8,8 @@ function getUserById(id) {
   return userQuery.findById(id);
 }
 
-module.exports = { getUsers, getUserById };
+function getCurrentUser(id) {
+  return userQuery.findById(id);
+}
+
+module.exports = { getUsers, getUserById,getCurrentUser };

@@ -18,6 +18,25 @@ async function getAllUsers(req, res, next) {
   }
 }
 
+async function getCurrentUser(req, res, next) {
+
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ message: 'Authenticated user ID is missing' });
+    }
+    const user = await userService.getCurrentUser(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json({ data: user });
+  } catch (error) {
+    next(error);
+  }
+
+
+}
+
 async function getUserById(req, res, next) {
   try {
     const id = Number(req.params.id);
@@ -36,4 +55,4 @@ async function getUserById(req, res, next) {
   }
 }
 
-module.exports = { getUsers, getUserById, getAllUsers };
+module.exports = { getUsers, getUserById, getAllUsers, getCurrentUser };
